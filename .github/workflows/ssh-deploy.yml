@@ -8,19 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download Docker image artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: petclinic-image
-          path: .
-
-      - name: Connect to server and deploy
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker load < petclinic-image.tar
+            docker pull fr0zen74/petclinic:latest
             docker compose down || true
             docker compose up -d

@@ -6,6 +6,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -14,15 +15,13 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker images
-        working-directory: ./docker
         run: docker compose build
 
       - name: Save Docker image as artifact
-        working-directory: ./docker
         run: docker save petclinic-image > petclinic-image.tar
 
       - name: Upload image as artifact
         uses: actions/upload-artifact@v4
         with:
           name: petclinic-image
-          path: docker/petclinic-image.tar
+          path: petclinic-image.tar

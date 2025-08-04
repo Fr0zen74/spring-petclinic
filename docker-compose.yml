@@ -17,6 +17,7 @@ services:
 
   tomcat:
     build: .
+    image: petclinic-image
     container_name: petclinic-tomcat
     depends_on:
       - postgres

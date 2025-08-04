@@ -1,0 +1,28 @@
+name: Manual CI/CD Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker images
+        run: |
+          docker compose -f docker/docker-compose.yml build
+
+      - name: Save Docker images as artifact (optional)
+        run: |
+          docker save petclinic-image > petclinic-image.tar
+
+      - name: Upload image as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: petclinic-image
+          path: petclinic-image.tar

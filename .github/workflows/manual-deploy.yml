@@ -38,7 +38,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Push image to Docker Hub
-        run: docker push andreymdster/petclinic:latest
+        run: docker push fr0zen74/petclinic:latest
 
       - name: Save Docker image as artifact
         run: docker save petclinic-image > petclinic-image.tar
